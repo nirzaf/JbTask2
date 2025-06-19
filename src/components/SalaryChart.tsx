@@ -28,8 +28,9 @@ export default function SalaryChart({ data }: SalaryChartProps) {
           <Tooltip
             contentStyle={{ backgroundColor: "#333", border: "1px solid #555" }}
             labelStyle={{ color: "#fff" }}
-            formatter={(value: any, name: any, props: any) => {
-                const [min, max] = props.payload.range;
+            formatter={(value, name, props) => {
+                const payload = (props as unknown as { payload: { range: number[] } }).payload;
+                const [min, max] = payload.range;
                 return `$${min}K - $${max}K`;
             }}
           />

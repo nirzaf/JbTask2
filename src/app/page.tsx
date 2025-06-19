@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { ResponsiveContainer, ComposedChart, XAxis, YAxis, Tooltip, Scatter, Line } from 'recharts';
 import { Info } from 'lucide-react';
-import { CalculatorData } from '@/types';
+import { CalculatorData, LanguageData } from '@/types';
 import calculatorData from '@/data/calculatorData.json';
 
 // Cast the imported data to the correct type
@@ -37,12 +37,20 @@ const Header = () => (
 );
 
 /**
- * Input form component for selecting filters
+ * Input form component props interface
  */
-const InputForm = ({ setFilters, filters }: { setFilters: any, filters: any }) => {
+interface InputFormProps {
+  setFilters: React.Dispatch<React.SetStateAction<Filters>>;
+  filters: Filters;
+}
+
+/**
+ * Input form component
+ */
+const InputForm = ({ setFilters, filters }: InputFormProps) => {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    setFilters((prev: any) => ({ ...prev, [name]: value }));
+    setFilters((prev: Filters) => ({ ...prev, [name]: value }));
   };
 
   // Get available countries and languages from the data
@@ -119,7 +127,7 @@ const InputForm = ({ setFilters, filters }: { setFilters: any, filters: any }) =
 /**
  * Salary chart component using real data
  */
-const SalaryChart = ({ languageData }: { languageData: any }) => {
+const SalaryChart = ({ languageData }: { languageData: LanguageData | undefined }) => {
   if (!languageData) return null;
 
   // Process the real data structure
@@ -162,11 +170,11 @@ const SalaryChart = ({ languageData }: { languageData: any }) => {
                 borderColor: '#4C1D95',
                 borderRadius: '0.5rem'
              }}
-            formatter={(value: any, name: any) => {
-                if (name === 'range') {
+            formatter={(value: number | number[], name: string) => {
+                if (name === 'range' && Array.isArray(value)) {
                     return [`$${value[0].toLocaleString()} - $${value[1].toLocaleString()}`, 'Salary Range']
                 }
-                if(name === 'mid') {
+                if(name === 'mid' && typeof value === 'number') {
                     return [`$${value.toLocaleString()}`, 'Median']
                 }
                 return [value, name];
@@ -181,9 +189,18 @@ const SalaryChart = ({ languageData }: { languageData: any }) => {
 };
 
 /**
+ * Filters interface for type safety
+ */
+interface Filters {
+  language: string;
+  country: string;
+  experience: string;
+}
+
+/**
  * Results display component
  */
-const ResultsDisplay = ({ filters }: { filters: any }) => {
+const ResultsDisplay = ({ filters }: { filters: Filters }) => {
     const { language, country, experience } = filters;
     const languageData = data[country]?.[language];
 

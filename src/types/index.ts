@@ -12,7 +12,7 @@ export interface SalaryData {
 export interface LanguageData {
   entries: SalaryData[];
   yGroups: string[];
-  xRangeGroups: [number, number][];
+  xRangeGroups: number[][];
   xRange: string[];
 }
 
