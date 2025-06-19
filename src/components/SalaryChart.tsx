@@ -9,10 +9,35 @@ interface SalaryChartProps {
 }
 
 export default function SalaryChart({ data }: SalaryChartProps) {
-  const chartData = data.yGroups.map((group, index) => ({
-    name: group,
-    range: data.xRangeGroups[index],
-  }));
+  console.log('SalaryChart component received data:', data);
+  
+  // Ensure data has the expected structure
+  if (!data || !data.yGroups || !data.xRangeGroups || !Array.isArray(data.yGroups) || !Array.isArray(data.xRangeGroups)) {
+    console.error('Invalid data structure received in SalaryChart component:', data);
+    return null;
+  }
+  
+  // Transform the data for the chart
+  const chartData = data.yGroups.map((group, index) => {
+    if (Array.isArray(data.xRangeGroups[index]) && data.xRangeGroups[index].length >= 2) {
+      const [min, max] = data.xRangeGroups[index];
+      return {
+        name: group,
+        min: min,
+        max: max,
+        // For the bar chart, we need a single value
+        value: max - min
+      };
+    }
+    return {
+      name: group,
+      min: 0,
+      max: 0,
+      value: 0
+    };
+  });
+  
+  console.log('Processed chart data:', chartData);
 
   return (
     <motion.div
@@ -29,12 +54,11 @@ export default function SalaryChart({ data }: SalaryChartProps) {
             contentStyle={{ backgroundColor: "#333", border: "1px solid #555" }}
             labelStyle={{ color: "#fff" }}
             formatter={(value, name, props) => {
-                const payload = (props as unknown as { payload: { range: number[] } }).payload;
-                const [min, max] = payload.range;
-                return `$${min}K - $${max}K`;
+                const payload = props.payload;
+                return `$${payload.min}K - $${payload.max}K`;
             }}
           />
-          <Bar dataKey="range" fill="#8884d8" barSize={20} />
+          <Bar dataKey="value" fill="#8884d8" barSize={20} />
         </BarChart>
       </ResponsiveContainer>
     </motion.div>
