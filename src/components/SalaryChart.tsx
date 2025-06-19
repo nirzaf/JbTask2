@@ -43,13 +43,6 @@ export default function SalaryChart({ data, language = 'Selected Language', coun
     return groupedData;
   };
 
-  /**
-   * Calculate average salary for each experience level
-   */
-  const calculateAverageSalary = (salaries: number[]) => {
-    return salaries.reduce((sum, salary) => sum + salary, 0) / salaries.length;
-  };
-
   const currentSalaries = getCurrentSalaryData();
 
   return (
