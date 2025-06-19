@@ -78,10 +78,18 @@ export default function SalaryChart({ data, language = 'Selected Language', coun
             <div className="flex-1 mr-8">
               {/* Dot Plot Chart */}
               <div className="relative mb-8">
-                <div className="space-y-6">
+                <div className="space-y-3">
                   {Object.entries(currentSalaries).length > 0 ? Object.entries(currentSalaries).reverse().map(([exp, salaries], index) => {
-                    const colors = ['#8B5CF6', '#EC4899', '#3B82F6', '#6B7280', '#F97316', '#10B981'];
-                    const color = colors[5 - index]; // Reverse to match the original order
+                    // Define color mapping for each experience level
+                    const colorMap: { [key: string]: string } = {
+                      '16+ years': '#10B981',    // Green
+                      '11–16 years': '#F97316',  // Orange  
+                      '6–10 years': '#6B7280',   // Grey
+                      '3–5 years': '#3B82F6',    // Blue
+                      '1–2 years': '#EC4899',    // Pink
+                      '<1 year': '#8B5CF6'       // Violet
+                    };
+                    const color = colorMap[exp] || '#6B7280'; // Default to grey if not found
                     const maxSalary = 300; // Set max range for scaling (values are in thousands)
                     
                     // Filter and limit salary data points for visualization
@@ -92,7 +100,7 @@ export default function SalaryChart({ data, language = 'Selected Language', coun
                     return (
                       <motion.div 
                         key={exp} 
-                        className="flex items-center h-4"
+                        className="flex items-center h-6"
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.5, delay: index * 0.1 }}
@@ -151,10 +159,18 @@ export default function SalaryChart({ data, language = 'Selected Language', coun
             </div>
 
             {/* Legend */}
-            <div className="flex flex-col justify-center space-y-3">
+            <div className="flex flex-col justify-start space-y-3 mt-4">
               {Object.keys(currentSalaries).length > 0 ? Object.keys(currentSalaries).reverse().map((exp, index) => {
-                const colors = ['#8B5CF6', '#EC4899', '#3B82F6', '#6B7280', '#F97316', '#10B981'];
-                const color = colors[5 - index];
+                // Use the same color mapping as in the chart
+                const colorMap: { [key: string]: string } = {
+                  '16+ years': '#10B981',    // Green
+                  '11–16 years': '#F97316',  // Orange  
+                  '6–10 years': '#6B7280',   // Grey
+                  '3–5 years': '#3B82F6',    // Blue
+                  '1–2 years': '#EC4899',    // Pink
+                  '<1 year': '#8B5CF6'       // Violet
+                };
+                const color = colorMap[exp] || '#6B7280'; // Default to grey if not found
                 
                 return (
                   <motion.div 
