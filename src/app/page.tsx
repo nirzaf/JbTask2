@@ -121,17 +121,10 @@ interface Filters {
 }
 
 /**
- * Results display component
+ * Results display component - now shows the modern C# dot plot
  */
 const ResultsDisplay = ({ filters, showResults }: { filters: Filters, showResults: boolean }) => {
   const { language, country } = filters;
-  const languageData = data[country]?.[language];
-
-  // Debug logs
-  console.log('Selected Country:', country);
-  console.log('Selected Language:', language);
-  console.log('Data structure:', data);
-  console.log('Language Data:', languageData);
 
   if (!showResults) {
     return (
@@ -146,51 +139,30 @@ const ResultsDisplay = ({ filters, showResults }: { filters: Filters, showResult
     );
   }
 
-  if (!language || !country) {
-    return (
-      <div className="bg-white text-gray-800 rounded-2xl p-6">
-        <div className="text-center py-12">
-          <div className="text-6xl opacity-30 mb-4">📊</div>
-          <p className="text-lg font-medium text-gray-700">
-            Select a programming language and country to see salary estimates
-          </p>
-        </div>
-      </div>
-    );
-  }
-
-  if (!languageData) {
-    return (
-      <div className="bg-white text-gray-800 rounded-2xl p-6">
-        <p className="text-yellow-600">No data available for {language} in {country}. Try selecting different options.</p>
-      </div>
-    );
-  }
-
+  // Show the modern dot plot for any selection
   return (
     <div className="bg-white text-gray-800 rounded-2xl p-6">
-      {/* Use the imported SalaryChartComponent */}
-      <SalaryChartComponent data={languageData} />
+      {/* Use the new modern dot plot component */}
+      <SalaryChartComponent language={language} country={country} />
 
       <div className="mt-8">
         <div className="mb-6">
           <p className="text-lg text-gray-700">
-            Most <span className="text-purple-600 font-semibold">{language}</span> developers with <span className="text-purple-600 font-semibold">less than 1 year</span> of
-            professional experience in <span className="text-purple-600 font-semibold">{country}</span> can expect the
-            following net salary distribution (excluding any bonuses):
+            {language} developers in <span className="text-purple-600 font-semibold">{country}</span> show a wide salary range
+            based on their professional coding experience. The visualization above displays individual salary data points
+            with horizontal range lines for each experience level.
           </p>
         </div>
 
         <div className="text-sm font-medium text-gray-800 mb-4 mt-8">
-          <p>The graph shows salary distribution among users of the selected technology in the specified region,
-            based on responses from <span className="underline">Developer Ecosystem Survey 2024</span>.</p>
+          <p>The dot plot shows salary distribution among {language} specialists in {country},
+            based on 2024 industry data with salaries including bonuses.</p>
         </div>
 
         <div className="flex items-start space-x-2 text-sm font-medium text-gray-800">
           <Info size={16} className="mt-0.5 flex-shrink-0" />
           <p>
-            <strong>Note:</strong> Experience levels refer to total years of professional coding, not years using the
-            selected technology.
+            <strong>Note:</strong> Each dot represents an individual&apos;s reported salary. Experience levels refer to total years of professional coding experience.
           </p>
         </div>
       </div>
