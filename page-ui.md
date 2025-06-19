@@ -67,7 +67,7 @@ const ITSalaryCalculator = () => {
   const getCurrentSalaryData = () => {
     const langKey = language.toLowerCase();
     const countryKey = country.toLowerCase();
-
+    
     if (salaryData[langKey] && salaryData[langKey][countryKey]) {
       return salaryData[langKey][countryKey];
     }
@@ -93,9 +93,9 @@ const ITSalaryCalculator = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-900 via-purple-800 to-orange-500 text-white p-6">
-      {/*Decorative circle*/}
+      {/* Decorative circle */}
       <div className="absolute top-0 right-0 w-64 h-64 bg-black rounded-full opacity-30 -translate-y-32 translate-x-32"></div>
-
+      
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="mb-12">
@@ -211,9 +211,9 @@ const ITSalaryCalculator = () => {
                     {/* Dot Plot Chart */}
                     <div className="relative mb-8">
                       <div className="space-y-6">
-                        {Object.entries(getCurrentSalaryData()).map(([exp, salaries], index) => {
+                        {Object.entries(getCurrentSalaryData()).reverse().map(([exp, salaries], index) => {
                           const colors = ['#8B5CF6', '#EC4899', '#3B82F6', '#6B7280', '#F97316', '#10B981'];
-                          const color = colors[index];
+                          const color = colors[5 - index]; // Reverse to match the original order
                           const maxSalary = 300000; // Set max range for scaling
                           
                           // Filter and limit salary data points for visualization
@@ -266,9 +266,9 @@ const ITSalaryCalculator = () => {
 
                   {/* Legend */}
                   <div className="flex flex-col justify-center space-y-3">
-                    {Object.keys(getCurrentSalaryData()).map((exp, index) => {
+                    {Object.keys(getCurrentSalaryData()).reverse().map((exp, index) => {
                       const colors = ['#8B5CF6', '#EC4899', '#3B82F6', '#6B7280', '#F97316', '#10B981'];
-                      const color = colors[index];
+                      const color = colors[5 - index];
                       
                       return (
                         <div key={exp} className="flex items-center space-x-3">
