@@ -1,36 +1,103 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Developer Salary Visualization
+
+This is an interactive data visualization application that displays developer salary data from the JetBrains Developer Ecosystem Survey 2024. It is built with Next.js, TypeScript, and Recharts.
+
+## Features
+
+- **Interactive Filters**: Filter salary data by country and programming language.
+- **Data Visualization**: View salary ranges based on years of experience.
+- **Responsive Design**: The application is designed to work on various screen sizes.
+- **Real Data Integration**: Uses actual survey data from JetBrains Developer Ecosystem Survey 2024.
 
 ## Getting Started
 
-First, run the development server:
+To run this project locally, follow these steps:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+1. **Clone the repository:**
+
+   ```bash
+   git clone https://github.com/your-username/salary-visualization.git
+   cd salary-visualization
+   ```
+
+2. **Install dependencies:**
+
+   ```bash
+   npm install
+   ```
+
+3. **Run the development server:**
+
+   ```bash
+   npm run dev
+   ```
+
+4. Open [http://localhost:3000](http://localhost:3000) in your browser to see the application.
+
+## Technologies Used
+
+- **Next.js**: A React framework for building server-side rendered and static web applications.
+- **TypeScript**: A typed superset of JavaScript that enhances code quality and maintainability.
+- **Recharts**: A composable charting library built on React components.
+- **Tailwind CSS**: A utility-first CSS framework for rapid UI development.
+- **Framer Motion**: A library for creating production-ready animations.
+- **Lucide React**: Beautiful & consistent icon toolkit.
+
+## Project Structure
+
+```
+/
+├── src/
+│   ├── app/
+│   │   ├── layout.tsx
+│   │   └── page.tsx
+│   ├── components/
+│   │   ├── Filters.tsx
+│   │   └── SalaryChart.tsx
+│   ├── data/
+│   │   └── calculatorData.json
+│   └── types/
+│       └── index.ts
+├── package.json
+└── tsconfig.json
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Data Source
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+The data used in this application is from the [JetBrains Developer Ecosystem Survey 2024](https://www.jetbrains.com/lp/devecosystem-2024/). The `calculatorData.json` file contains comprehensive salary data across different countries, programming languages, and experience levels.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Features Overview
 
-## Learn More
+### Interactive Salary Calculator
+- Select from multiple countries and programming languages
+- Filter by professional experience levels
+- Real-time visualization updates
 
-To learn more about Next.js, take a look at the following resources:
+### Data Visualization
+- Horizontal bar charts showing salary ranges
+- Scatter plots indicating median salaries
+- Responsive design that works on all devices
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### User Experience
+- Modern, dark-themed UI with gradient backgrounds
+- Smooth animations and transitions
+- Clear data presentation with helpful tooltips
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Development
 
-## Deploy on Vercel
+### Adding New Features
+- Components are modular and reusable
+- TypeScript ensures type safety throughout the application
+- Follow the existing code patterns for consistency
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Data Updates
+- Update `src/data/calculatorData.json` with new survey data
+- Ensure data structure matches the TypeScript interfaces in `src/types/index.ts`
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+This project is open source and available under the [MIT License](LICENSE).
