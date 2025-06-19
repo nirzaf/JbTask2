@@ -76,49 +76,50 @@ export default function SalaryChart({ data, language = 'Selected Language', coun
           <div className="flex">
             {/* Chart area */}
             <div className="flex-1 mr-8">
-              {/* Bar Chart */}
+              {/* Dot Plot Chart */}
               <div className="relative mb-8">
                 <div className="space-y-6">
                   {Object.entries(currentSalaries).length > 0 ? Object.entries(currentSalaries).reverse().map(([exp, salaries], index) => {
                     const colors = ['#8B5CF6', '#EC4899', '#3B82F6', '#6B7280', '#F97316', '#10B981'];
                     const color = colors[5 - index]; // Reverse to match the original order
-                    const maxSalary = 300000; // Set max range for scaling
+                    const maxSalary = 300; // Set max range for scaling (values are in thousands)
                     
-                    // Calculate average salary for bar length
-                    const avgSalary = calculateAverageSalary(salaries);
-                    const minSalary = Math.min(...salaries);
-                    const maxSalaryInRange = Math.max(...salaries);
+                    // Filter and limit salary data points for visualization
+                    const displaySalaries = salaries.filter((_, i) => i % 2 === 0).slice(0, 15);
+                    
+                    console.log(`Experience: ${exp}, Salaries:`, displaySalaries, `Max: ${maxSalary}`);
                     
                     return (
                       <motion.div 
                         key={exp} 
-                        className="flex items-center h-8"
+                        className="flex items-center h-4"
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.5, delay: index * 0.1 }}
                       >
                         <div className="flex items-center space-x-1 flex-1">
-                          {/* Horizontal Bar */}
-                          <div className="relative flex-1 h-6 bg-gray-100 rounded-md overflow-hidden">
-                            <motion.div
-                              className="h-full rounded-md shadow-sm"
-                              style={{ 
-                                backgroundColor: color,
-                                width: `${Math.min((avgSalary / maxSalary) * 100, 95)}%`
-                              }}
-                              initial={{ width: 0 }}
-                              animate={{ width: `${Math.min((avgSalary / maxSalary) * 100, 95)}%` }}
-                              transition={{ duration: 0.8, delay: index * 0.1 }}
-                            />
-                            {/* Salary range indicator */}
-                            <div 
-                              className="absolute top-0 h-full border-l-2 border-r-2 border-opacity-60"
-                              style={{
-                                borderColor: color,
-                                left: `${Math.min((minSalary / maxSalary) * 100, 95)}%`,
-                                width: `${Math.min(((maxSalaryInRange - minSalary) / maxSalary) * 100, 95 - (minSalary / maxSalary) * 100)}%`
-                              }}
-                            />
+                          {/* Connecting line */}
+                          <div className="relative flex-1 h-0.5" style={{ backgroundColor: color + '20' }}>
+                            {displaySalaries.map((salary, dotIndex) => {
+                              const position = (salary / maxSalary) * 100;
+                              console.log(`Dot ${dotIndex}: salary=${salary}, position=${position}%`);
+                              
+                              return (
+                                <motion.div
+                                  key={dotIndex}
+                                  className="absolute w-3 h-3 rounded-full -translate-y-1"
+                                  style={{ 
+                                    backgroundColor: color,
+                                    left: `${Math.min(position, 95)}%`,
+                                    border: '1px solid rgba(255,255,255,0.8)',
+                                    boxShadow: '0 1px 3px rgba(0,0,0,0.3)'
+                                  }}
+                                  initial={{ scale: 0, opacity: 0 }}
+                                  animate={{ scale: 1, opacity: 1 }}
+                                  transition={{ duration: 0.3, delay: index * 0.1 + dotIndex * 0.05 }}
+                                />
+                              );
+                            })}
                           </div>
                         </div>
                       </motion.div>
@@ -183,7 +184,7 @@ export default function SalaryChart({ data, language = 'Selected Language', coun
             <Info size={16} className="mt-0.5 flex-shrink-0" />
             <p>
               <strong>Note:</strong> Experience levels refer to total years of professional coding, not years using the
-              selected technology. Bars show average salaries with range indicators.
+              selected technology. Dots show individual salary data points with range indicators.
             </p>
           </div>
         </div>
