@@ -50,13 +50,13 @@ const InputForm = ({ setFilters, filters, onCalculate }: InputFormProps) => {
           <div className="bg-purple-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold mr-3">1</div>
           <div>
             <h3 className="font-semibold">Enter your programming language,</h3>
-            <p className="opacity-80">and country.</p>
+            <p className="text-white">and country.</p>
           </div>
         </div>
         
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-medium mb-2">Programming language</label>
+            <label className="block text-sm font-semibold text-white mb-2">Programming language</label>
             <select 
               name="language"
               value={filters.language}
@@ -71,7 +71,7 @@ const InputForm = ({ setFilters, filters, onCalculate }: InputFormProps) => {
           </div>
           
           <div>
-            <label className="block text-sm font-medium mb-2">Country</label>
+            <label className="block text-sm font-semibold text-white mb-2">Country</label>
             <select 
               name="country"
               value={filters.country}
@@ -93,7 +93,7 @@ const InputForm = ({ setFilters, filters, onCalculate }: InputFormProps) => {
           <div className="bg-purple-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold mr-3">2</div>
           <div>
             <h3 className="font-semibold">Calculate the salary range</h3>
-            <p className="opacity-80">based on your parameters.</p>
+            <p className="text-white">based on your parameters.</p>
           </div>
         </div>
         
@@ -180,7 +180,7 @@ const SalaryChart = ({ languageData, selectedLanguage, selectedCountry }: { lang
             </div>
             
             {/* X-axis labels */}
-            <div className="flex justify-between text-xs text-gray-400 mt-4">
+            <div className="flex justify-between text-xs font-medium text-gray-300 mt-4">
               <span>$0k</span>
               <span>$50k</span>
               <span>$100k</span>
@@ -203,19 +203,19 @@ const SalaryChart = ({ languageData, selectedLanguage, selectedCountry }: { lang
                   className="w-3 h-3 rounded-full"
                   style={{ backgroundColor: color }}
                 ></div>
-                <span className="text-sm text-gray-600">{item.level}</span>
+                <span className="text-sm font-medium text-gray-800">{item.level}</span>
               </div>
             );
           })}
         </div>
       </div>
 
-      <div className="text-sm text-gray-600 mb-4 mt-8">
+      <div className="text-sm font-medium text-gray-800 mb-4 mt-8">
         <p>The graph shows salary distribution among users of the selected technology in the specified region,
         based on responses from <span className="underline">Developer Ecosystem Survey 2024</span>.</p>
       </div>
 
-      <div className="flex items-start space-x-2 text-sm text-gray-600">
+      <div className="flex items-start space-x-2 text-sm font-medium text-gray-800">
         <Info size={16} className="mt-0.5 flex-shrink-0" />
         <p>
           <strong>Note:</strong> Experience levels refer to total years of professional coding, not years using the
@@ -246,7 +246,7 @@ const ResultsDisplay = ({ filters, showResults }: { filters: Filters, showResult
       <div className="bg-white text-gray-800 rounded-2xl p-6">
         <div className="text-center py-12">
           <div className="text-6xl opacity-30 mb-4">📊</div>
-          <p className="text-lg text-gray-600">
+          <p className="text-lg font-medium text-gray-700">
             Select a programming language and country to see salary estimates
           </p>
         </div>
@@ -259,7 +259,7 @@ const ResultsDisplay = ({ filters, showResults }: { filters: Filters, showResult
       <div className="bg-white text-gray-800 rounded-2xl p-6">
         <div className="text-center py-12">
           <div className="text-6xl opacity-30 mb-4">📊</div>
-          <p className="text-lg text-gray-600">
+          <p className="text-lg font-medium text-gray-700">
             Select a programming language and country to see salary estimates
           </p>
         </div>
@@ -313,7 +313,7 @@ export default function Home() {
         {/* Header */}
         <div className="mb-12">
           <h1 className="text-5xl font-bold mb-6">IT Salary<br />Calculator</h1>
-          <p className="text-lg opacity-90 max-w-lg leading-relaxed">
+          <p className="text-lg text-white max-w-lg leading-relaxed">
             Each year, our extensive surveys reach out to over 30,000 
             developers across over 180 countries, representing a diverse 
             range of specialties. With data collected over multiple years, 
@@ -323,7 +323,7 @@ export default function Home() {
         </div>
 
         <div className="mb-8">
-          <p className="text-xl opacity-90 max-w-xl">
+          <p className="text-xl text-white max-w-xl">
             Use our calculator to estimate your income 
             potential based on software developer 
             skills, programming language, location, 

@@ -25,4 +25,34 @@ body {
 .dark body {
   background: linear-gradient(to bottom right, #4a1d96, #5b21b6, #7e22ce, #a21caf);
   min-height: 100vh;
+  color: #ffffff;
+}
+
+/* Improved text contrast styles */
+.opacity-80, .opacity-90 {
+  opacity: 0.95 !important; /* Increase opacity for better contrast */
+}
+
+.text-gray-400 {
+  color: #6b7280 !important; /* Darker gray for better contrast */
+}
+
+.text-gray-600 {
+  color: #4b5563 !important; /* Darker gray for better contrast */
+}
+
+.text-sm {
+  font-weight: 500; /* Slightly bolder for better readability */
+}
+
+/* Ensure text on white background has sufficient contrast */
+.bg-white {
+  color: #171717;
+}
+
+/* Improve contrast for text on dark/transparent backgrounds */
+.bg-white.bg-opacity-10 label,
+.bg-black.bg-opacity-30 {
+  color: #ffffff;
+  font-weight: 500;
 }
