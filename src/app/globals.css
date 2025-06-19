@@ -45,6 +45,11 @@ body {
   font-weight: 500; /* Slightly bolder for better readability */
 }
 
+/* Text color overrides */
+.text-black {
+  color: #000000 !important; /* Force black color */
+}
+
 /* Ensure text on white background has sufficient contrast */
 .bg-white {
   color: #171717;

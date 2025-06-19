@@ -49,14 +49,14 @@ const InputForm = ({ setFilters, filters, onCalculate }: InputFormProps) => {
         <div className="flex items-center mb-4">
           <div className="bg-purple-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold mr-3">1</div>
           <div>
-            <h3 className="font-semibold">Enter your programming language,</h3>
-            <p className="text-white">and country.</p>
+            <h3 className="font-semibold text-black">Enter your programming language,</h3>
+            <p className="text-black">and country.</p>
           </div>
         </div>
         
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-semibold text-white mb-2">Programming language</label>
+            <label className="block text-sm font-semibold text-black mb-2">Programming language</label>
             <select 
               name="language"
               value={filters.language}
@@ -71,7 +71,7 @@ const InputForm = ({ setFilters, filters, onCalculate }: InputFormProps) => {
           </div>
           
           <div>
-            <label className="block text-sm font-semibold text-white mb-2">Country</label>
+            <label className="block text-sm font-semibold text-black mb-2">Country</label>
             <select 
               name="country"
               value={filters.country}
