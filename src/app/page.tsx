@@ -8,28 +8,20 @@ import calculatorData from '@/data/calculatorData.json';
 // Cast the imported data to the correct type
 const data: CalculatorData = calculatorData as CalculatorData;
 
-// Sample data for languages and countries
-const languages = {
-  "Kotlin": "Kotlin",
-  "JavaScript": "JavaScript",
-  "Python": "Python",
-  "Java": "Java",
-  "TypeScript": "TypeScript",
-  "C++": "C++",
-  "Go": "Go",
-  "Rust": "Rust"
-};
+// Extract countries and languages from the data
+const countries: Record<string, string> = {};
+Object.keys(data).forEach(country => {
+  countries[country] = country;
+});
 
-const countries = {
-  "Australia": "Australia",
-  "USA": "United States",
-  "Canada": "Canada",
-  "UK": "United Kingdom",
-  "Germany": "Germany",
-  "Netherlands": "Netherlands",
-  "Sweden": "Sweden",
-  "Switzerland": "Switzerland"
-};
+// Extract unique languages from all countries
+const languages: Record<string, string> = {};
+Object.keys(data).forEach(country => {
+  Object.keys(data[country]).forEach(language => {
+    languages[language] = language;
+  });
+});
+
 
 // --- Components ---
 /**
