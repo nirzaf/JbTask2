@@ -142,9 +142,7 @@ const ResultsDisplay = ({ filters, showResults }: { filters: Filters, showResult
   // Show the modern dot plot for any selection
   return (
     <div className="bg-white text-gray-800 rounded-2xl p-6">
-      {/* Use the new modern dot plot component */}
-      <SalaryChartComponent language={language} country={country} />
-
+      <SalaryChartComponent data={languageData} language={language} country={country} />
       <div className="mt-8">
         <div className="mb-6">
           <p className="text-lg text-gray-700">
@@ -210,9 +208,9 @@ export default function Home() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* Left Panel - Input Form */}
-          <div>
+        <div className="grid grid-cols-1 lg:grid-cols-10 gap-8">
+          {/* Left Panel - Input Form (30% width) */}
+          <div className="lg:col-span-3">
             <InputForm
               setFilters={setFilters}
               filters={filters}
@@ -220,11 +218,13 @@ export default function Home() {
             />
           </div>
 
-          {/* Right Panel - Results */}
-          <ResultsDisplay
-            filters={filters}
-            showResults={showResults}
-          />
+          {/* Right Panel - Results (70% width) */}
+          <div className="lg:col-span-7">
+            <ResultsDisplay
+              filters={filters}
+              showResults={showResults}
+            />
+          </div>
         </div>
       </div>
     </div>

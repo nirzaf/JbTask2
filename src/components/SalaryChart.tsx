@@ -1,332 +1,229 @@
-"use client";
+'use client';
 
-import React from "react";
+import React, { useState } from 'react';
 import { motion } from "framer-motion";
+import { Info } from 'lucide-react';
+import { LanguageData } from '@/types';
 
 /**
- * Modern dot plot component for visualizing salary distribution
- * Displays salary data as colored dots with horizontal range lines
- */
+
+Modern dot plot component for visualizing salary distribution
+
+Displays salary data as colored dots with horizontal range lines
+*/
 interface SalaryChartProps {
-  language?: string;
-  country?: string;
+data: LanguageData;
+language?: string;
+country?: string;
 }
 
-export default function SalaryChart({ language = "C#", country = "United Kingdom" }: SalaryChartProps) {
-  // Sample C# salary data for United Kingdom 2024
-  const salaryData = [
-    // <1 year experience - Orange dots
-    { salary: 25, experience: "<1 year", color: "#ff7300" },
-    { salary: 30, experience: "<1 year", color: "#ff7300" },
-    { salary: 35, experience: "<1 year", color: "#ff7300" },
-    { salary: 40, experience: "<1 year", color: "#ff7300" },
-    
-    // 1-2 years experience - Orange dots
-    { salary: 35, experience: "1-2 years", color: "#ff7300" },
-    { salary: 42, experience: "1-2 years", color: "#ff7300" },
-    { salary: 48, experience: "1-2 years", color: "#ff7300" },
-    { salary: 55, experience: "1-2 years", color: "#ff7300" },
-    { salary: 62, experience: "1-2 years", color: "#ff7300" },
-    
-    // 3-5 years experience - Grey dots
-    { salary: 45, experience: "3-5 years", color: "#9ca3af" },
-    { salary: 52, experience: "3-5 years", color: "#9ca3af" },
-    { salary: 58, experience: "3-5 years", color: "#9ca3af" },
-    { salary: 65, experience: "3-5 years", color: "#9ca3af" },
-    { salary: 72, experience: "3-5 years", color: "#9ca3af" },
-    { salary: 78, experience: "3-5 years", color: "#9ca3af" },
-    { salary: 85, experience: "3-5 years", color: "#9ca3af" },
-    
-    // 6-10 years experience - Blue dots
-    { salary: 65, experience: "6-10 years", color: "#3b82f6" },
-    { salary: 72, experience: "6-10 years", color: "#3b82f6" },
-    { salary: 78, experience: "6-10 years", color: "#3b82f6" },
-    { salary: 85, experience: "6-10 years", color: "#3b82f6" },
-    { salary: 92, experience: "6-10 years", color: "#3b82f6" },
-    { salary: 98, experience: "6-10 years", color: "#3b82f6" },
-    { salary: 105, experience: "6-10 years", color: "#3b82f6" },
-    { salary: 112, experience: "6-10 years", color: "#3b82f6" },
-    { salary: 125, experience: "6-10 years", color: "#3b82f6" },
-    
-    // 11-16 years experience - Pink dots
-    { salary: 85, experience: "11-16 years", color: "#ec4899" },
-    { salary: 95, experience: "11-16 years", color: "#ec4899" },
-    { salary: 105, experience: "11-16 years", color: "#ec4899" },
-    { salary: 115, experience: "11-16 years", color: "#ec4899" },
-    { salary: 125, experience: "11-16 years", color: "#ec4899" },
-    { salary: 135, experience: "11-16 years", color: "#ec4899" },
-    { salary: 145, experience: "11-16 years", color: "#ec4899" },
-    { salary: 155, experience: "11-16 years", color: "#ec4899" },
-    { salary: 165, experience: "11-16 years", color: "#ec4899" },
-    { salary: 175, experience: "11-16 years", color: "#ec4899" },
-    
-    // 16+ years experience - Purple dots
-    { salary: 120, experience: "16+ years", color: "#8b5cf6" },
-    { salary: 135, experience: "16+ years", color: "#8b5cf6" },
-    { salary: 150, experience: "16+ years", color: "#8b5cf6" },
-    { salary: 165, experience: "16+ years", color: "#8b5cf6" },
-    { salary: 180, experience: "16+ years", color: "#8b5cf6" },
-    { salary: 195, experience: "16+ years", color: "#8b5cf6" },
-    { salary: 210, experience: "16+ years", color: "#8b5cf6" },
-    { salary: 225, experience: "16+ years", color: "#8b5cf6" },
-    { salary: 240, experience: "16+ years", color: "#8b5cf6" },
-    { salary: 255, experience: "16+ years", color: "#8b5cf6" },
-    { salary: 270, experience: "16+ years", color: "#8b5cf6" },
-  ];
+/**
 
-  // Experience levels in order from bottom to top
-  const experienceLevels = [
-    "<1 year",
-    "1-2 years", 
-    "3-5 years",
-    "6-10 years",
-    "11-16 years",
-    "16+ years"
-  ];
+SalaryChart component that displays salary distribution as horizontal bars
 
-  /**
-   * Generate X-axis tick marks from $0K to $300K at $25K intervals
-   */
-  const generateXTicks = () => {
-    const ticks = [];
-    for (let i = 0; i <= 300; i += 25) {
-      ticks.push(i);
-    }
-    return ticks;
-  };
+Uses actual data from the application instead of hardcoded values
+*/
+export default function SalaryChart({ data, language = 'Selected Language', country = 'Selected Country' }: SalaryChartProps) {
+const [showResults] = useState(true);
 
-  const xTicks = generateXTicks();
-  const chartWidth = 1000;
-  const chartHeight = 500;
-  const margin = { top: 60, right: 100, bottom: 100, left: 180 };
-  const plotWidth = chartWidth - margin.left - margin.right;
-  const plotHeight = chartHeight - margin.top - margin.bottom;
-  
-  // Scale functions
-  const xScale = (salary: number) => (salary / 300) * plotWidth;
-  // Y-scale for proper dot plot with experience levels from bottom to top
-  const yScale = (experienceIndex: number) => {
-    const bandHeight = plotHeight / experienceLevels.length;
-    // Reverse the order so lowest experience is at bottom
-    return plotHeight - (experienceIndex * bandHeight + bandHeight / 2);
-  };
-  
-  // Group data by experience level for better positioning
-  const groupedData = experienceLevels.map(level => {
-    return salaryData.filter(d => d.experience === level);
-  });
+/**
 
-  return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.5, delay: 0.2 }}
-      className="w-full bg-white p-6 rounded-lg shadow-sm"
-    >
-      {/* Chart Title */}
-      <h2 className="text-xl font-semibold text-gray-800 mb-6 text-center">
-        {language} Specialist Salary Distribution - {country} 2024
-      </h2>
-      
-      <div className="flex justify-center">
-        <svg width={chartWidth} height={chartHeight} className="overflow-visible">
-          {/* Background */}
-          <rect
-            x={margin.left}
-            y={margin.top}
-            width={plotWidth}
-            height={plotHeight}
-            fill="#fcfcfc"
-            stroke="#d1d5db"
-            strokeWidth={1}
-          />
-          
-          {/* Vertical grid lines */}
-          {xTicks.map((tick, i) => (
-            <line
-              key={i}
-              x1={margin.left + xScale(tick)}
-              y1={margin.top}
-              x2={margin.left + xScale(tick)}
-              y2={margin.top + plotHeight}
-              stroke="#e5e7eb"
-              strokeWidth={0.8}
-              opacity={0.6}
-            />
-          ))}
-          
-          {/* Horizontal grid lines */}
-          {experienceLevels.map((_, i) => (
-            <line
-              key={i}
-              x1={margin.left}
-              y1={margin.top + yScale(i)}
-              x2={margin.left + plotWidth}
-              y2={margin.top + yScale(i)}
-              stroke="#d1d5db"
-              strokeWidth={0.8}
-              opacity={0.4}
-            />
-          ))}
-          
-          {/* Horizontal range lines for each experience level */}
-          {experienceLevels.map((experience, index) => {
-            const experienceData = salaryData.filter(d => d.experience === experience);
-            if (experienceData.length === 0) return null;
+Process the actual data to group salaries by experience level
+*/
+const getCurrentSalaryData = () => {
+const groupedData: { [key: string]: number[] } = {};
+
+Generated code
+// Check if data and entries exist
+if (!data || !data.entries) {
+  console.log('No data or entries found:', data);
+  return groupedData;
+}
+
+// Group data by experience level
+data.entries.forEach(entry => {
+  const experience = entry.metadata.Experience;
+  if (!groupedData[experience]) {
+    groupedData[experience] = [];
+  }
+  groupedData[experience].push(entry.value);
+});
+
+console.log('Grouped salary data:', groupedData);
+return groupedData;
+
+
+};
+
+const currentSalaries = getCurrentSalaryData();
+
+return (
+<motion.div
+initial={{ opacity: 0, y: 20 }}
+animate={{ opacity: 1, y: 0 }}
+transition={{ duration: 0.6 }}
+className="bg-white text-gray-800 rounded-2xl p-6"
+>
+{showResults && language && country ? (
+<div>
+{/* Title */}
+<h2 className="text-2xl font-bold text-gray-900 mb-6">
+{language} Specialist Salary Distribution - {country} 2024
+</h2>
+
+Generated code
+<div className="mb-6">
+        <p className="text-lg text-gray-700">
+          Coding specialists from <span className="text-purple-600 font-semibold">{country}</span> who use{' '}
+          <span className="text-purple-600 font-semibold">{language}</span> reported to have the following gross annual salaries (in USD including bonuses) in 2024:
+        </p>
+      </div>
+
+      <div className="flex">
+        {/* Chart area */}
+        <div className="flex-1 mr-8">
+          {/* Dot Plot Chart */}
+          <div className="relative mb-8">
+            <div className="space-y-3">
+              {Object.entries(currentSalaries).length > 0 ? Object.entries(currentSalaries).reverse().map(([exp, salaries], index) => {
+                // Define color mapping for each experience level
+                const colorMap: { [key: string]: string } = {
+                  '16+ years': '#10B981',    // Green
+                  '11–16 years': '#F97316',  // Orange  
+                  '6–10 years': '#6B7280',   // Grey
+                  '3–5 years': '#3B82F6',    // Blue
+                  '1–2 years': '#EC4899',    // Pink
+                  '<1 year': '#8B5CF6'       // Violet
+                };
+                const color = colorMap[exp] || '#6B7280'; // Default to grey if not found
+                const maxSalary = 300; // Set max range for scaling (values are in thousands)
+                
+                // Filter and limit salary data points for visualization
+                const displaySalaries = salaries.filter((_, i) => i % 2 === 0).slice(0, 15);
+                
+                console.log(`Experience: ${exp}, Salaries:`, displaySalaries, `Max: ${maxSalary}`);
+                
+                return (
+                  <motion.div 
+                    key={exp} 
+                    className="flex items-center h-6"
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                  >
+                    <div className="flex items-center space-x-1 flex-1">
+                      {/* Connecting line */}
+                      <div className="relative flex-1 h-0.5" style={{ backgroundColor: color + '20' }}>
+                        {displaySalaries.map((salary, dotIndex) => {
+                          const position = (salary / maxSalary) * 100;
+                          console.log(`Dot ${dotIndex}: salary=${salary}, position=${position}%`);
+                          
+                          return (
+                            <motion.div
+                              key={dotIndex}
+                              className="absolute w-3 h-3 rounded-full -translate-y-1"
+                              style={{ 
+                                backgroundColor: color,
+                                left: `${Math.min(position, 95)}%`,
+                                border: '1px solid rgba(255,255,255,0.8)',
+                                boxShadow: '0 1px 3px rgba(0,0,0,0.3)'
+                              }}
+                              initial={{ scale: 0, opacity: 0 }}
+                              animate={{ scale: 1, opacity: 1 }}
+                              transition={{ duration: 0.3, delay: index * 0.1 + dotIndex * 0.05 }}
+                            />
+                          );
+                        })}
+                      </div>
+                    </div>
+                  </motion.div>
+                );
+              }) : (
+                <div className="text-center py-8 text-gray-500">
+                  <p>No salary data available for the selected combination.</p>
+                </div>
+              )}
+            </div>
             
-            const minSalary = Math.min(...experienceData.map(d => d.salary));
-            const maxSalary = Math.max(...experienceData.map(d => d.salary));
-            const y = margin.top + yScale(index);
+            {/* X-axis labels */}
+            <div className="flex justify-between text-xs text-gray-400 mt-4">
+              <span>$0k</span>
+              <span>$25k</span>
+              <span>$50k</span>
+              <span>$75k</span>
+              <span>$100k</span>
+              <span>$125k</span>
+              <span>$150k</span>
+              <span>$175k</span>
+              <span>$200k</span>
+              <span>$225k</span>
+              <span>$250k</span>
+              <span>$275k</span>
+              <span>$300k</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Legend */}
+        <div className="flex flex-col justify-start space-y-3 mt-4">
+          {Object.keys(currentSalaries).length > 0 ? Object.keys(currentSalaries).reverse().map((exp, index) => {
+            // Use the same color mapping as in the chart
+            const colorMap: { [key: string]: string } = {
+              '16+ years': '#10B981',    // Green
+              '11–16 years': '#F97316',  // Orange  
+              '6–10 years': '#6B7280',   // Grey
+              '3–5 years': '#3B82F6',    // Blue
+              '1–2 years': '#EC4899',    // Pink
+              '<1 year': '#8B5CF6'       // Violet
+            };
+            const color = colorMap[exp] || '#6B7280'; // Default to grey if not found
             
             return (
-              <line
-                key={`range-${experience}`}
-                x1={margin.left + xScale(minSalary)}
-                y1={y}
-                x2={margin.left + xScale(maxSalary)}
-                y2={y}
-                stroke="#9ca3af"
-                strokeWidth={2.5}
-                opacity={0.3}
-                strokeLinecap="round"
-              />
+              <motion.div 
+                key={exp} 
+                className="flex items-center space-x-3"
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+              >
+                <div 
+                  className="w-3 h-3 rounded-sm"
+                  style={{ backgroundColor: color }}
+                ></div>
+                <span className="text-sm text-gray-600">{exp}</span>
+              </motion.div>
             );
-          })}
-          
-          {/* Data points (dots) with improved positioning */}
-          {groupedData.map((group, groupIndex) => {
-            const baseY = yScale(groupIndex);
-            return group.map((d, pointIndex) => {
-              // Add slight vertical jitter for overlapping salaries
-              const verticalJitter = ((pointIndex % 3) - 1) * 4;
-              const y = baseY + verticalJitter;
-              
-              return (
-                <motion.circle
-                  key={`${groupIndex}-${pointIndex}`}
-                  cx={margin.left + xScale(d.salary)}
-                  cy={margin.top + y}
-                  r={6}
-                  fill={d.color}
-                  stroke="white"
-                  strokeWidth={2}
-                  style={{
-                    filter: "drop-shadow(0 3px 6px rgba(0,0,0,0.15))",
-                    cursor: "pointer"
-                  }}
-                  whileHover={{ 
-                    scale: 1.4, 
-                    strokeWidth: 3,
-                    filter: "drop-shadow(0 4px 8px rgba(0,0,0,0.25))"
-                  }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <title>{`${d.experience}: $${d.salary}k`}</title>
-                </motion.circle>
-              );
-            });
-          }).flat()}
-          
-          {/* X-axis */}
-          <line
-            x1={margin.left}
-            y1={margin.top + plotHeight}
-            x2={margin.left + plotWidth}
-            y2={margin.top + plotHeight}
-            stroke="#1f2937"
-            strokeWidth={1.5}
-          />
-          
-          {/* Y-axis */}
-          <line
-            x1={margin.left}
-            y1={margin.top}
-            x2={margin.left}
-            y2={margin.top + plotHeight}
-            stroke="#1f2937"
-            strokeWidth={1.5}
-          />
-          
-          {/* X-axis labels */}
-          {xTicks.filter(tick => tick % 50 === 0).map(tick => (
-            <text
-              key={`xlabel-${tick}`}
-              x={margin.left + xScale(tick)}
-              y={margin.top + plotHeight + 30}
-              textAnchor="middle"
-              fontSize="13"
-              fill="#374151"
-              fontWeight="400"
-              fontFamily="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
-            >
-              ${tick}K
-            </text>
-          ))}
-          
-          {/* Y-axis labels */}
-          {experienceLevels.map((experience, index) => (
-            <text
-              key={`ylabel-${experience}`}
-              x={margin.left - 20}
-              y={margin.top + yScale(index) + 5}
-              textAnchor="end"
-              fontSize="13"
-              fill="#374151"
-              fontWeight="500"
-              fontFamily="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
-            >
-              {experience}
-            </text>
-          ))}
-          
-          {/* X-axis title */}
-          <text
-            x={margin.left + plotWidth / 2}
-            y={margin.top + plotHeight + 70}
-            textAnchor="middle"
-            fontSize={15}
-            fill="#1f2937"
-            fontWeight={600}
-            fontFamily="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
-          >
-            Salary in USD (including bonuses)
-          </text>
-          
-          {/* Y-axis title */}
-          <text
-            x={30}
-            y={margin.top + plotHeight / 2}
-            textAnchor="middle"
-            fontSize={15}
-            fill="#1f2937"
-            fontWeight={600}
-            fontFamily="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
-            transform={`rotate(-90, 30, ${margin.top + plotHeight / 2})`}
-          >
-            Experience Level
-          </text>
-        </svg>
+          }) : null}
+        </div>
       </div>
-      
-      {/* Legend */}
-      <div className="flex flex-wrap justify-center gap-6 mt-6">
-        {[
-          { label: "<1 year", color: "#ff7300" },
-          { label: "1-2 years", color: "#ff7300" },
-          { label: "3-5 years", color: "#9ca3af" },
-          { label: "6-10 years", color: "#3b82f6" },
-          { label: "11-16 years", color: "#ec4899" },
-          { label: "16+ years", color: "#8b5cf6" }
-        ].map(item => (
-          <div key={item.label} className="flex items-center gap-2">
-            <div 
-              className="w-3 h-3 rounded-full border border-white"
-              style={{ backgroundColor: item.color }}
-            />
-            <span className="text-sm text-gray-600">{item.label}</span>
-          </div>
-        ))}
+
+      <div className="text-sm text-gray-600 mb-4 mt-8">
+        <p>The graph shows salary distribution among users of the selected technology in the specified region,
+        based on responses from <span className="underline">Developer Ecosystem Survey 2024</span>.</p>
       </div>
-    </motion.div>
-  );
+
+      <div className="flex items-start space-x-2 text-sm text-gray-600">
+        <Info size={16} className="mt-0.5 flex-shrink-0" />
+        <p>
+          <strong>Note:</strong> Experience levels refer to total years of professional coding, not years using the
+          selected technology. Dots show individual salary data points with range indicators.
+        </p>
+      </div>
+    </div>
+  ) : (
+    <div className="text-center py-12">
+      <div className="text-6xl opacity-30 mb-4">📊</div>
+      <p className="text-lg text-gray-600">
+        Select a programming language and country to see salary estimates
+      </p>
+    </div>
+  )}
+</motion.div>
+IGNORE_WHEN_COPYING_START
+content_copy
+download
+Use code with caution.
+IGNORE_WHEN_COPYING_END
+
+);
 }
