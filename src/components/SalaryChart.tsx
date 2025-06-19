@@ -25,8 +25,7 @@ export default function SalaryChart({ data }: SalaryChartProps) {
         name: group,
         min: min,
         max: max,
-        // For the bar chart, we need a single value
-        value: max - min
+        value: max
       };
     }
     return {
