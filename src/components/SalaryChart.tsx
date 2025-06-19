@@ -33,7 +33,6 @@ Process the actual data to group salaries by experience level
 const getCurrentSalaryData = () => {
 const groupedData: { [key: string]: number[] } = {};
 
-Generated code
 // Check if data and entries exist
 if (!data || !data.entries) {
   console.log('No data or entries found:', data);
@@ -71,7 +70,6 @@ className="bg-white text-gray-800 rounded-2xl p-6"
 {language} Specialist Salary Distribution - {country} 2024
 </h2>
 
-Generated code
 <div className="mb-6">
         <p className="text-lg text-gray-700">
           Coding specialists from <span className="text-purple-600 font-semibold">{country}</span> who use{' '}
@@ -219,11 +217,5 @@ Generated code
     </div>
   )}
 </motion.div>
-IGNORE_WHEN_COPYING_START
-content_copy
-download
-Use code with caution.
-IGNORE_WHEN_COPYING_END
-
 );
 }

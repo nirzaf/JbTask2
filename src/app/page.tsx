@@ -142,7 +142,7 @@ const ResultsDisplay = ({ filters, showResults }: { filters: Filters, showResult
   // Show the modern dot plot for any selection
   return (
     <div className="bg-white text-gray-800 rounded-2xl p-6">
-      <SalaryChartComponent data={languageData} language={language} country={country} />
+      <SalaryChartComponent data={data[country]?.[language]} language={language} country={country} />
       <div className="mt-8">
         <div className="mb-6">
           <p className="text-lg text-gray-700">
