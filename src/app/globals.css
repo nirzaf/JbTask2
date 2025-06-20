@@ -23,7 +23,7 @@ body {
 }
 
 .dark body {
-  background: linear-gradient(to bottom right, #4a1d96, #5b21b6, #7e22ce, #a21caf);
+  background: #0D0D0D;
   min-height: 100vh;
   color: #ffffff;
 }

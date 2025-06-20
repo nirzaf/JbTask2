@@ -86,12 +86,12 @@ className="bg-white text-gray-800 rounded-2xl p-6"
               {Object.entries(currentSalaries).length > 0 ? Object.entries(currentSalaries).reverse().map(([exp, salaries], index) => {
                 // Define color mapping for each experience level
                 const colorMap: { [key: string]: string } = {
-                  '16+ years': '#10B981',    // Green
-                  '11–16 years': '#F97316',  // Orange  
-                  '6–10 years': '#6B7280',   // Grey
-                  '3–5 years': '#3B82F6',    // Blue
-                  '1–2 years': '#EC4899',    // Pink
-                  '<1 year': '#8B5CF6'       // Violet
+                  '16+ years': '#4C1D95',    // Deep Purple
+                  '11–16 years': '#6D28D9',  // Medium Purple
+                  '6–10 years': '#8B5CF6',   // Light Purple
+                  '3–5 years': '#2563EB',    // Deep Blue
+                  '1–2 years': '#3B82F6',    // Medium Blue
+                  '<1 year': '#60A5FA'       // Light Blue
                 };
                 const color = colorMap[exp] || '#6B7280'; // Default to grey if not found
                 const maxSalary = 300; // Set max range for scaling (values are in thousands)
@@ -144,7 +144,7 @@ className="bg-white text-gray-800 rounded-2xl p-6"
             </div>
             
             {/* X-axis labels */}
-            <div className="flex justify-between text-xs text-gray-400 mt-4">
+            <div className="flex justify-between text-xs text-gray-500 mt-4">
               <span>$0k</span>
               <span>$25k</span>
               <span>$50k</span>
@@ -167,12 +167,12 @@ className="bg-white text-gray-800 rounded-2xl p-6"
           {Object.keys(currentSalaries).length > 0 ? Object.keys(currentSalaries).reverse().map((exp, index) => {
             // Use the same color mapping as in the chart
             const colorMap: { [key: string]: string } = {
-              '16+ years': '#10B981',    // Green
-              '11–16 years': '#F97316',  // Orange  
-              '6–10 years': '#6B7280',   // Grey
-              '3–5 years': '#3B82F6',    // Blue
-              '1–2 years': '#EC4899',    // Pink
-              '<1 year': '#8B5CF6'       // Violet
+              '16+ years': '#4C1D95',    // Deep Purple
+              '11–16 years': '#6D28D9',  // Medium Purple
+              '6–10 years': '#8B5CF6',   // Light Purple
+              '3–5 years': '#2563EB',    // Deep Blue
+              '1–2 years': '#3B82F6',    // Medium Blue
+              '<1 year': '#60A5FA'       // Light Blue
             };
             const color = colorMap[exp] || '#6B7280'; // Default to grey if not found
             

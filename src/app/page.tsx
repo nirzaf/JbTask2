@@ -46,18 +46,18 @@ const InputForm = ({ setFilters, filters, onCalculate }: InputFormProps) => {
   return (
     <div className="space-y-8">
       {/* Step 1 */}
-      <div className="bg-white bg-opacity-10 backdrop-blur-sm rounded-2xl p-6">
+      <div style={{ backgroundColor: '#1E1B3A' }} className="backdrop-blur-sm rounded-2xl p-6">
         <div className="flex items-center mb-4">
-          <div className="bg-purple-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold mr-3">1</div>
+          <div className="bg-violet-500 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold mr-3">1</div>
           <div>
-            <h3 className="font-semibold text-black">Enter your programming language,</h3>
-            <p className="text-black">and country.</p>
+            <h3 className="font-semibold text-white">Enter your programming language,</h3>
+            <p className="text-gray-300">and country.</p>
           </div>
         </div>
 
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-semibold text-black mb-2">Programming language</label>
+            <label className="block text-sm font-semibold text-gray-200 mb-2">Programming language</label>
             <select
               name="language"
               value={filters.language}
@@ -72,7 +72,7 @@ const InputForm = ({ setFilters, filters, onCalculate }: InputFormProps) => {
           </div>
 
           <div>
-            <label className="block text-sm font-semibold text-black mb-2">Country</label>
+            <label className="block text-sm font-semibold text-gray-200 mb-2">Country</label>
             <select
               name="country"
               value={filters.country}
@@ -89,12 +89,12 @@ const InputForm = ({ setFilters, filters, onCalculate }: InputFormProps) => {
       </div>
 
       {/* Step 2 */}
-      <div className="bg-white bg-opacity-10 backdrop-blur-sm rounded-2xl p-6">
+      <div style={{ backgroundColor: '#1E1B3A' }} className="backdrop-blur-sm rounded-2xl p-6">
         <div className="flex items-center mb-4">
-          <div className="bg-purple-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold mr-3">2</div>
+          <div className="bg-violet-500 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold mr-3">2</div>
           <div>
-            <h3 className="font-semibold">Calculate the salary range</h3>
-            <p className="text-white">based on your parameters.</p>
+            <h3 className="font-semibold text-white">Calculate the salary range</h3>
+            <p className="text-gray-300">based on your parameters.</p>
           </div>
         </div>
 
@@ -128,10 +128,10 @@ const ResultsDisplay = ({ filters, showResults }: { filters: Filters, showResult
 
   if (!showResults) {
     return (
-      <div className="bg-white text-gray-800 rounded-2xl p-6">
+      <div style={{ backgroundColor: '#1E1B3A' }} className="text-gray-200 rounded-2xl p-6">
         <div className="text-center py-12">
           <div className="text-6xl opacity-30 mb-4">📊</div>
-          <p className="text-lg font-medium text-gray-700">
+          <p className="text-lg font-medium text-gray-300">
             Select a programming language and country to see salary estimates
           </p>
         </div>
@@ -141,24 +141,24 @@ const ResultsDisplay = ({ filters, showResults }: { filters: Filters, showResult
 
   // Show the modern dot plot for any selection
   return (
-    <div className="bg-white text-gray-800 rounded-2xl p-6">
+    <div style={{ backgroundColor: '#1E1B3A' }} className="text-gray-200 rounded-2xl p-6">
       <SalaryChartComponent data={data[country]?.[language]} language={language} country={country} />
       <div className="mt-8">
         <div className="mb-6">
-          <p className="text-lg text-gray-700">
+          <p className="text-lg text-gray-200">
             {language} developers in <span className="text-purple-600 font-semibold">{country}</span> show a wide salary range
             based on their professional coding experience. The visualization above displays individual salary data points
             with horizontal range lines for each experience level.
           </p>
         </div>
 
-        <div className="text-sm font-medium text-gray-800 mb-4 mt-8">
+        <div className="text-sm font-medium text-gray-300 mb-4 mt-8">
           <p>The dot plot shows salary distribution among {language} specialists in {country},
             based on 2024 industry data with salaries including bonuses.</p>
         </div>
 
-        <div className="flex items-start space-x-2 text-sm font-medium text-gray-800">
-          <Info size={16} className="mt-0.5 flex-shrink-0" />
+        <div className="flex items-start space-x-2 text-sm font-medium text-gray-300">
+          <Info size={16} className="mt-0.5 flex-shrink-0" /> {/* text-gray-300 will make Info icon light */}
           <p>
             <strong>Note:</strong> Each dot represents an individual&apos;s reported salary. Experience levels refer to total years of professional coding experience.
           </p>
@@ -183,8 +183,8 @@ export default function Home() {
 
   return (
     <div className="min-h-screen p-6">
-      {/* Decorative circle */}
-      <div className="absolute top-0 right-0 w-64 h-64 bg-black rounded-full opacity-30 -translate-y-32 translate-x-32"></div>
+      {/* New Abstract Graphical Element */}
+      <div style={{ position: 'absolute', top: '-50px', right: '-50px', width: '300px', height: '300px', background: 'radial-gradient(circle, #FDE047, #F97316, #EC4899, #A855F7)', opacity: 0.7, borderRadius: '50%', filter: 'blur(24px)' }}></div>
 
       <div className="max-w-6xl mx-auto">
         {/* Header */}
