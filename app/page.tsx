@@ -169,27 +169,60 @@ export default function SalaryCalculator() {
 
   return (
     <div
-      className="min-h-screen relative overflow-hidden"
-      style={{
-        background:
-          "linear-gradient(135deg, #1a0b2e 0%, #2d1b69 25%, #7c3aed 50%, #a855f7 75%, #f59e0b 90%, #f97316 100%)",
-      }}
+      className="min-h-screen relative overflow-hidden bg-black"
     >
-      {/* Geometric background shapes */}
+      {/* Flowing wave-like abstract shape */}
       <div className="absolute inset-0">
-        {/* Large black circle top right */}
-        <div className="absolute -top-48 -right-48 w-96 h-96 bg-black rounded-full opacity-80"></div>
+        {/* Main flowing wave form - upper right to lower right */}
+        <div 
+          className="absolute -top-40 -right-8 w-[500px] h-[400px] opacity-90"
+          style={{
+            background: "linear-gradient(135deg, #ff8c00 0%, #ffd700 15%, #ff1493 30%, #ff69b4 45%, #8a2be2 60%, #4b0082 75%, #191970 90%, #000000 100%)",
+            borderRadius: "60% 40% 80% 20% / 30% 70% 40% 60%",
+            transform: "rotate(-25deg) skewY(-5deg)",
+            filter: "blur(0.5px)"
+          }}
+        ></div>
+        
+        {/* Cascading ridged layers for dimensional effect */}
+        <div 
+          className="absolute -top-36 -right-4 w-[450px] h-[350px] opacity-80"
+          style={{
+            background: "linear-gradient(140deg, #ff8c00 0%, #ffd700 20%, #ff1493 35%, #ff69b4 50%, #8a2be2 65%, #4b0082 80%, #191970 95%)",
+            borderRadius: "65% 35% 75% 25% / 35% 65% 45% 55%",
+            transform: "rotate(-22deg) skewY(-3deg) translateY(15px)",
+            filter: "blur(1px)"
+          }}
+        ></div>
+        
+        <div 
+          className="absolute -top-32 right-0 w-[400px] h-[300px] opacity-70"
+          style={{
+            background: "linear-gradient(145deg, #ff8c00 5%, #ffd700 25%, #ff1493 40%, #ff69b4 55%, #8a2be2 70%, #4b0082 85%)",
+            borderRadius: "70% 30% 70% 30% / 40% 60% 50% 50%",
+            transform: "rotate(-19deg) skewY(-1deg) translateY(30px)",
+            filter: "blur(1.5px)"
+          }}
+        ></div>
+        
+        <div 
+          className="absolute -top-28 right-4 w-[350px] h-[250px] opacity-60"
+          style={{
+            background: "linear-gradient(150deg, #ff8c00 10%, #ffd700 30%, #ff1493 45%, #ff69b4 60%, #8a2be2 75%, #4b0082 90%)",
+            borderRadius: "75% 25% 65% 35% / 45% 55% 55% 45%",
+            transform: "rotate(-16deg) translateY(45px)",
+            filter: "blur(2px)"
+          }}
+        ></div>
+        
+        {/* Circular void/opening in upper portion */}
+        <div 
+          className="absolute -top-16 right-20 w-[80px] h-[80px] bg-black rounded-full opacity-100"
+          style={{
+            filter: "blur(2px)"
+          }}
+        ></div>
 
-        {/* Purple triangular layers */}
-        <div className="absolute top-0 left-0 w-full h-full">
-          <div className="absolute top-0 right-0 w-0 h-0 border-l-[400px] border-l-transparent border-b-[300px] border-b-purple-800/40"></div>
-          <div className="absolute top-20 right-0 w-0 h-0 border-l-[350px] border-l-transparent border-b-[250px] border-b-purple-700/30"></div>
-          <div className="absolute top-40 right-0 w-0 h-0 border-l-[300px] border-l-transparent border-b-[200px] border-b-purple-600/20"></div>
-          <div className="absolute top-60 right-0 w-0 h-0 border-l-[250px] border-l-transparent border-b-[150px] border-b-purple-500/15"></div>
-        </div>
-
-        {/* Additional gradient overlay for depth */}
-        <div className="absolute inset-0 bg-gradient-to-br from-purple-900/50 via-transparent to-orange-400/30"></div>
       </div>
 
       <div className="container mx-auto px-4 py-8 relative z-10">
